@@ -22,4 +22,4 @@ lines = LOAD 'data.tsv' AS (letter:CHARARRAY, date:CHARARRAY, number:int);
 list_orden = ORDER lines BY letter, number ASC;
 
 -- dump list_orden;
-STORE ordered_data INTO 'output' USING PigStorage(',');
+STORE list_orden INTO 'output' USING PigStorage(',');
