@@ -17,7 +17,7 @@ $ pig -x local -f pregunta.pig
 -- %%writefile wordcount-local.pig
 
 -- carga de datos desde la carpeta local
-lines = LOAD 'data.csv' AS (line:CHARARRAY);
+lines = LOAD 'data.tsv' AS (line:CHARARRAY);
 
 -- genera una tabla llamada words con una palabra por registro
 words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) AS word;
