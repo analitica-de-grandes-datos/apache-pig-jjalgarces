@@ -24,4 +24,4 @@ s = LIMIT Col3 5;
 
 -- dump s;
 
--- STORE list_orden INTO 'output' USING PigStorage(',');
+STORE list_orden INTO 'output' USING PigStorage(',');
