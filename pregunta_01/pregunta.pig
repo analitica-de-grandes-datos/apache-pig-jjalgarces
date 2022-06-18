@@ -14,7 +14,7 @@ $ pig -x local -f pregunta.pig
 */
 
 
-%%writefile wordcount-local.pig
+-- %%writefile wordcount-local.pig
 
 -- carga de datos desde la carpeta local
 lines = LOAD 'data.csv' AS (line:CHARARRAY);
