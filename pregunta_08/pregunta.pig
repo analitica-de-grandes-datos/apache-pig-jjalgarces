@@ -27,4 +27,4 @@ result = FOREACH groupep GENERATE group, COUNT(rows);
 
 -- dump result; 
 
-STORE wordcount INTO 'output' USING PigStorage(',');
+STORE result INTO 'output' USING PigStorage(',');
