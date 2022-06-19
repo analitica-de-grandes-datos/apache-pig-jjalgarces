@@ -33,4 +33,4 @@ filtered_name = FILTER filtered_color BY (name MATCHES '.*[Z].*');
 
 -- dump filtered_name;
 
-STORE filtered_color INTO 'output';
+STORE filtered_name INTO 'output' USING PigStorage(' ');
