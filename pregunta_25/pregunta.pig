@@ -20,3 +20,16 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:chararray, color:chararray, cant:int);
+
+-- SUBSTRING_INDEX: Return a substring of a string before a specified number of delimiter occurs
+
+-- INDEXOF:It returns the first occurrence of the given character in the string, searching forward from the given index
+
+-- col = FOREACH lines GENERATE SUBSTRING (name, 0, 1);
+
+col = FOREACH lines GENERATE INDEXOF(name, 'a', 1);
+
+-- dump col;
+
+STORE col INTO 'output';
