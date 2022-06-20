@@ -26,7 +26,7 @@ lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:
 -- Col5 = FOREACH lines GENERATE name, color;
 
 col_color = FOREACH lines GENERATE name, 
-                                        FLATTEN(REGEX_EXTRACT_ALL(color, '(.*b.*)')) 
+                                        FLATTEN(REGEX_EXTRACT_ALL(color, '(.*[b].*)')) 
                                         AS color_;
 
 SelecNNull = FILTER col_color BY (color_ is NOT NULL);
