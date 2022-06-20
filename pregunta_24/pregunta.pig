@@ -20,3 +20,16 @@ $ pig -x local -f pregunta.pig
 */
 
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:chararray, color:chararray, cant:int);
+
+-- for_date = FOREACH lines GENERATE GetDay(ToDate(date,'yyyy/MM/dd:HH:mm:ss'));
+
+-- REGEX_EXTRACT (cadena,regex,índice)
+
+col_date = FOREACH lines GENERATE FLATTEN(REGEX_EXTRACT(date, '([0-9]+)-([0-9]+)-([0-9]+)', 2)) AS DATE_;
+
+-- SelecNNull = FILTER col_date BY (date_ is NOT NULL);
+
+--dump col_date;
+
+STORE col_date INTO 'output';
