@@ -23,3 +23,10 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:chararray, color:chararray, cant:int);
+
+col = FOREACH lines GENERATE FLATTEN (SUBSTRING(date, 0, 4)) as row, FLATTEN (SUBSTRING(date, 2, 4)) as row1;
+
+--dump col;
+
+STORE col INTO 'output' USING PigStorage(',');
