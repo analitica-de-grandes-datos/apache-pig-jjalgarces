@@ -34,3 +34,23 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:chararray, color:chararray, cant:int);
+
+-- todate_data = foreach lines generate ToDate(date,'yyyy-MM-dd') as (date_time:DateTime);
+
+-- getday_data = foreach todate_data generate(date_time), GetMonth(date_time), GetDay(date_time);
+
+
+col = FOREACH lines GENERATE date, FLATTEN (SUBSTRING(date, 5, 7)) as mes, FLATTEN (SUBSTRING(date, 5, 7)) as mesN, FLATTEN (SUBSTRING(date, 5, 7)) as mesS;
+
+
+colR1 = FOREACH col GENERATE date, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(mes, '07', 'jul'), '05', 'may'), '04', 'abr'), '01', 'ene'), '10', 'oct'), '02', 'feb'), '12', 'dic'), '08', 'ago'), mesN, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(mesS, '07', '7'), '05', '5'), '04', '4'), '01', '1'), '10', '10'), '02', '2'), '12', '12'), '08', '8');
+
+-- colR1 = FOREACH col GENERATE date, REPLACE(mes,'7','jul') OR REPLACE(mes,'5','may'); 
+
+
+-- REPLACE(mes,'5','may'), REPLACE(mes,'4','abr'), REPLACE(mes,'01','ene');
+
+-- dump colR1;
+
+STORE colR1 INTO 'output' USING PigStorage(',');
