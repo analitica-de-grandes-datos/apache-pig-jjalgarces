@@ -34,3 +34,17 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:Datetime, color:chararray, cant:int);
+
+-- col = FOREACH lines GENERATE date, FLATTEN (SUBSTRING(date, 8, 10)) as dia, FLATTEN (SUBSTRING(date, 8, 10)) as diaN, FLATTEN (SUBSTRING(date, 8, 10)) as diaS, FLATTEN (SUBSTRING(date, 8, 10)) as diaSS;
+
+-- colR1 = FOREACH col GENERATE date, dia, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(diaN, '08', '8'), '23', '23'), '22', '22'), '29', '29'), '03', '3'), '18', '18'), '05', '5'), '24', '24'), '17', '17'), '28', '28'), '07', '7'), '24', '24'), '27', '27'), '12', '12'), '01', '1'), '11', '11'), '01', '1'), '29', '29'), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(diaS, '08', 'jue'), '23', 'jue'), '22', 'dom'), '29', 'mie'), '03', 'mie'), '18', 'vie'), '05', 'lun'), '24', 'lun'), '17', 'jue'), '28', 'vie'), '07', 'dom'), '24', 'lun'), '27', 'jue'), '12', 'mar'), '01', 'mie'), '11', 'lun'), '01', 'dom'), '29', 'dom'), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(diaSS, '08', 'jueves'), '23', 'jueves'), '22', 'domingo'), '29', 'miercoles'), '03', 'miercoles'), '18', 'viernes'), '05', 'lunes'), '24', 'lunes'), '17', 'jueves'), '28', 'viernes'), '07', 'domingo'), '24', 'lunes'), '27', 'jueves'), '12', 'martes'), '01', 'miercoles'), '11', 'lunes'), '01', 'domingo'), '29', 'domingo');
+
+
+col = FOREACH lines GENERATE ToString(date, 'yyyy-MM-dd') as f1, ToString(date, 'dd,d') as f2, ToString(date, 'EEE') as d_corto, ToString(date, 'EEEE') as d_largo;
+
+ColS = FOREACH col GENERATE f1, f2, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_corto, 'Thu', 'jue'), 'Mon', 'lun'), 'Sun', 'dom'), 'Tue', 'mar'), 'Wed', 'mie'), 'Fri', 'vie'), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_largo, 'Thursday', 'jueves'), 'Monday', 'lunes'), 'Sunday', 'domingo'), 'Wednesday', 'miercoles'), 'Friday', 'viernes'), 'Tuesday', 'martes');
+
+-- dump ColS;
+
+STORE ColS INTO 'output' USING PigStorage(',');

@@ -27,3 +27,14 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:chararray, date:chararray, color:chararray, cant:int);
+
+Col2 = FOREACH lines GENERATE name2;
+
+filtered_name2 = FILTER Col2 BY (name2 MATCHES '.*[DEFGHIJK].*');
+
+-- result = FOREACH Col2 GENERATE name2, STARTSWITH (name2,'DEFGHIJK');
+
+-- dump filtered_name2;
+
+STORE filtered_name2 INTO 'output';
