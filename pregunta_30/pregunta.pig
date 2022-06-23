@@ -43,7 +43,7 @@ lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, name2:
 
 col = FOREACH lines GENERATE ToString(date, 'yyyy-MM-dd') as f1, ToString(date, 'dd,d') as f2, ToString(date, 'EEE') as d_corto, ToString(date, 'EEEE') as d_largo;
 
-ColS = FOREACH col GENERATE f1, f2, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_corto, 'Thu', 'jue'), 'Mon', 'lun'), 'Sun', 'dom'), 'Wed', 'mie'), 'Fri', 'vie'), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_largo, 'Thursday', 'jueves'), 'Monday', 'lunes'), 'Sunday', 'domingo'), 'Wednesday', 'miercoles'), 'Friday', 'viernes');
+ColS = FOREACH col GENERATE f1, f2, REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_corto, 'Thu', 'jue'), 'Mon', 'lun'), 'Sun', 'dom'), 'Tue', 'mar'), 'Wed', 'mie'), 'Fri', 'vie'), REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(d_largo, 'Thursday', 'jueves'), 'Monday', 'lunes'), 'Sunday', 'domingo'), 'Wednesday', 'miercoles'), 'Friday', 'viernes'), 'Tuesday', 'martes');
 
 -- dump ColS;
 
